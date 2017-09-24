@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">翻客</string>
+
+    <string name="configuration">配置</string>
+    <string name="account">账户</string>
+    <string name="buy">购买</string>
+    <string name="notice">公告</string>
+</resources>

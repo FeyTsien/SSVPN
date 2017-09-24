@@ -1,0 +1,53 @@
+apply plugin: 'com.android.application'
+
+android {
+
+    compileSdkVersion rootProject.ext.compileSdk
+    buildToolsVersion rootProject.ext.buildTools
+//    compileSdkVersion 26
+//    buildToolsVersion "26.0.1"
+    defaultConfig {
+        applicationId "com.tsien.ssvpn"
+        minSdkVersion rootProject.ext.minSdk//也可以支持16级以上的不过页面跳转效果就没有了，透明状态栏也没有。
+        targetSdkVersion rootProject.ext.targetSdk
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    compile "com.android.support:appcompat-v7:${rootProject.ext.support}"
+    compile "com.android.support:support-v4:${rootProject.ext.support}"
+    compile "com.android.support:design:${rootProject.ext.support}"
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    testCompile 'junit:junit:4.12'
+//==================================以下为个人增配======================================
+//    配置方法数超过 64K 的应用
+    compile 'com.android.support:multidex:1.0.0'
+
+    compile 'com.google.code.gson:gson:2.6.2'
+    compile 'io.reactivex:rxjava:1.1.0'
+    compile 'io.reactivex:rxandroid:1.1.0'
+    compile 'com.squareup.retrofit2:retrofit:2.0.2'
+//    compile 'com.squareup.retrofit2:converter-gson:2.1.0'
+    compile 'com.squareup.retrofit2:adapter-rxjava:2.0.2'
+    compile 'com.squareup.retrofit2:converter-scalars:2.0.2'
+    compile 'com.squareup.okhttp3:okhttp:3.4.1'
+    compile 'com.squareup.okhttp3:logging-interceptor:3.4.1'
+
+    //Android超强util库  -- 算不上超强,跟apache-commons相比差太远
+    compile 'com.blankj:utilcode:latest.release'
+    //一个 Android 系统的 View 注入框架，能够通过『注解』的方式来绑定 View 的属性或方法
+    compile 'com.jakewharton:butterknife:8.5.1'
+}
