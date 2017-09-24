@@ -6,6 +6,9 @@ import android.widget.ImageView;
 
 import com.blankj.utilcode.util.LogUtils;
 import com.tsien.ssvpn.R;
+import com.tsien.ssvpn.app.AppData;
+import com.tsien.ssvpn.ui.activity.main.MainActivity;
+import com.tsien.ssvpn.utils.CommonUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -31,17 +34,12 @@ public class SplashActivity extends BaseActivity {
 //        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 //                WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        LogUtils.Config config = ;
-        //logSwitch为false关闭日志
-        config.setLogSwitch(true);
-
-        /** 设置是否对日志信息进行加密, 默认false(不加密).------友盟 */
-//        AnalyticsConfig.enableEncrypt(false);//6.0.0版本以前
-        MobclickAgent.enableEncrypt(true);//6.0.0版本及以后
+//        LogUtils.Config config = ;
+//        //logSwitch为false关闭日志
+//        config.setLogSwitch(true);
 
         //绑定activity
         bind = ButterKnife.bind(this);
-        ivPic.setImageResource(R.mipmap.img_splash);
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -53,13 +51,13 @@ public class SplashActivity extends BaseActivity {
 
     private void start() {
         // 如果是第一次启动，则先进入功能引导页
-        if (AppData.getFirstOpen()==1) {
-            CommonUtils.startActivity(this, WelcomeGuideActivity.class);
+//        if (AppData.getFirstOpen()==1) {
+//            CommonUtils.startActivity(this, WelcomeGuideActivity.class);
+//            finish();
+//        }else {
+            CommonUtils.startActivity(this, MainActivity.class);
             finish();
-        }else {
-            CommonUtils.startActivity(this, MainActivity1.class);
-            finish();
-        }
+//        }
     }
 
     @Override

@@ -2,12 +2,39 @@
 <resources>
     <color name="colorPrimary">@color/colorTheme</color>
     <color name="colorPrimaryDark">#f4bf54</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorAccent">@color/colorTheme</color>
 
     <!--主题颜色-->
-    <color name="colorTheme">#0278ff</color>
+    <color name="colorTheme">#FF5500</color>
+    <!--辅助颜色-->
+    <color name="colorSub1">#03d457</color>
+
+    <!--每页底色-->
+    <color name="colorPageBG">#f2f2f2</color>
 
 
     <!--黑色-->
     <color name="black">#000000</color>
+    <!--白色-->
+    <color name="white">#ffffff</color>
+    <!--红色-->
+    <color name="red">#FF0000</color>
+    <!--橙色1-->
+    <color name="orange1">#FF5500</color>
+    <!--橙色2-->
+    <color name="orange2">#FF9900</color>
+    <!--橙色3-->
+    <color name="orange3">#FFcc00</color>
+    <!--黄色 #FFFF00-->
+    <color name="yellow">#FFFF00</color>
+    <!--绿色-->
+    <color name="green">#00FF00</color>
+    <!--青色 #00FFFF-->
+    <color name="cyan">#00FFFF</color>
+    <!--蓝色-->
+    <color name="blue">#0000FF</color>
+    <!--5 牡丹红 #FF00FF-->
+    <color name="peony">#FF00FF</color>
+    <!--金色-->
+    <color name="golden">#D4AF37</color>
 </resources>

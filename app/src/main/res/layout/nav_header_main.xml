@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="@dimen/nav_header_height"
-    android:background="@mipmap/head1"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@mipmap/head_bg"
     android:gravity="bottom"
     android:orientation="vertical"
     android:id="@+id/nav_header_main"
@@ -12,23 +13,27 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@mipmap/ic_launcher"/>
+    <com.tsien.ssvpn.ui.widget.CircleImageView
+        android:id="@+id/civ_avatar"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:src="@mipmap/loli"
+        app:civ_border_width="1dp"
+        app:civ_border_color="@color/white"
+        android:layout_marginBottom="5dp"/>
 
     <TextView
         android:id="@+id/tv_1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Android Studio"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+        android:text="Tsien"
+        android:textColor="@color/white"/>
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="android.studio@android.com" />
+        android:text="ss-vpn.in"
+        android:textColor="@color/white"/>
 
 </LinearLayout>

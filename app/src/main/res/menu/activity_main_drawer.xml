@@ -15,12 +15,12 @@
             android:icon="@drawable/ic_menu_buy"
             android:title="@string/buy" />
         <item
-            android:id="@+id/nav_system"
+            android:id="@+id/nav_notice"
             android:icon="@drawable/ic_menu_paper_plane"
             android:title="@string/notice" />
     </group>
 
-    <item android:title="Communicate">
+    <item android:title="其他功能">
         <menu>
             <item
                 android:id="@+id/nav_share"

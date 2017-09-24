@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -18,6 +20,10 @@ import android.widget.TextView;
 
 import com.tsien.ssvpn.R;
 import com.tsien.ssvpn.mvp.MVPBaseActivity;
+import com.tsien.ssvpn.ui.fragment.account.AccountFragment;
+import com.tsien.ssvpn.ui.fragment.buy.BuyFragment;
+import com.tsien.ssvpn.ui.fragment.configuration.ConfigurationFragment;
+import com.tsien.ssvpn.ui.fragment.notice.NoticeFragment;
 import com.tsien.ssvpn.utils.ToastUtil;
 
 import butterknife.BindView;
@@ -31,6 +37,10 @@ import butterknife.ButterKnife;
 
 public class MainActivity extends MVPBaseActivity<MainContract.View, MainPresenter> implements MainContract.View,NavigationView.OnNavigationItemSelectedListener {
 
+    private ConfigurationFragment mConfigurationFragment;
+    private AccountFragment mAccountFragment;
+    private BuyFragment mBuyFragment;
+    private NoticeFragment mNoticeFragment;
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -47,11 +57,69 @@ public class MainActivity extends MVPBaseActivity<MainContract.View, MainPresent
     }
 
     private void initView(){
+        //标题栏
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setLogo(R.drawable.ic_menu_configuration);
         toolbar.setTitle("  配置");
         setSupportActionBar(toolbar);
 
+        //主界面内容
+        setFragment();
+        //侧滑菜单
+        setNavigationView();
+        //浮动按钮
+        setFloatingActionButton();
+        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.setDrawerListener(toggle);
+        toggle.syncState();
+    }
+
+    /**
+     * 主页内容（默认第一页配置页）
+     */
+    private void setFragment(){
+
+        FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction transaction = fm.beginTransaction();
+
+        if (mConfigurationFragment == null) {
+            mConfigurationFragment = new ConfigurationFragment();
+        }
+        // 使用当前Fragment的布局替代content的控件
+        transaction.replace(R.id.content, mConfigurationFragment);
+        // 事务提交
+        transaction.commit();
+    }
+
+    /**
+     * 侧滑菜单初始化
+     */
+    public void setNavigationView(){
+        //侧滑菜单
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setItemIconTintList(null);
+        navigationView.setNavigationItemSelectedListener(this);
+        //侧滑菜单头部控件初始化
+        View headerLayout  = (LinearLayout) navigationView.inflateHeaderView(R.layout.nav_header_main);
+        ImageView head = (ImageView) headerLayout.findViewById(R.id.civ_avatar);
+        head.setImageResource(R.mipmap.loli);
+        TextView myName = (TextView) headerLayout.findViewById(R.id.tv_1);
+        myName.setText("Tsien");
+
+//        //可以隐藏某一个按钮
+//        MenuItem menuItem = navigationView.getMenu().findItem(R.id.nav_send);
+//        menuItem.setVisible(false);	// true 为显示，false 为隐藏
+
+        //设置默认显示第一页（配置）
+        navigationView.getMenu().getItem(0).setChecked(true);
+    }
+
+    /**
+     * 浮动按钮
+     */
+    private void setFloatingActionButton(){
         //浮动按钮
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -61,28 +129,7 @@ public class MainActivity extends MVPBaseActivity<MainContract.View, MainPresent
                         .setAction("Action", null).show();
             }
         });
-
-        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
-        toggle.syncState();
-
-        //侧滑菜单
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
-        //侧滑菜单头部控件初始化
-        View headerLayout  = (LinearLayout) navigationView.inflateHeaderView(R.layout.nav_header_main);
-        ImageView head = (ImageView) headerLayout.findViewById(R.id.imageView);
-        head.setImageResource(R.mipmap.ic_launcher_round);
-        TextView myName = (TextView) headerLayout.findViewById(R.id.tv_1);
-        myName.setText("SSPVN");
-
-        //设置默认显示第一页（配置）
-        navigationView.getMenu().getItem(0).setChecked(true);
     }
-
-
     /**
      * 创建右上角三个点的功能
      * @param menu
@@ -107,27 +154,47 @@ public class MainActivity extends MVPBaseActivity<MainContract.View, MainPresent
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        int id = item.getItemId();
+
+        FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction transaction = fm.beginTransaction();
+
         switch (item.getItemId()){
             case R.id.nav_configuration:
-                toolbar.setLogo(R.drawable.ic_menu_configuration);
+                toolbar.setLogo(R.drawable.ic_menu_configuration2);
                 toolbar.setTitle("  配置");
-                ToastUtil.show(this,"configuration");
+
+                if (mConfigurationFragment == null) {
+                    mConfigurationFragment = new ConfigurationFragment();
+                }
+                // 使用当前Fragment的布局替代content的控件
+                transaction.replace(R.id.content, mConfigurationFragment);
                 break;
             case R.id.nav_account:
-                toolbar.setLogo(R.drawable.ic_menu_account);
+                toolbar.setLogo(R.drawable.ic_menu_account2);
                 toolbar.setTitle("  账户");
-                ToastUtil.show(this,"account");
+                if (mAccountFragment == null) {
+                    mAccountFragment = new AccountFragment();
+                }
+                // 使用当前Fragment的布局替代content的控件
+                transaction.replace(R.id.content, mAccountFragment);
                 break;
             case R.id.nav_buy:
-                toolbar.setLogo(R.drawable.ic_menu_buy);
+                toolbar.setLogo(R.drawable.ic_menu_buy2);
                 toolbar.setTitle("  购买");
-                ToastUtil.show(this,"buy");
+                if (mBuyFragment == null) {
+                    mBuyFragment = new BuyFragment();
+                }
+                // 使用当前Fragment的布局替代content的控件
+                transaction.replace(R.id.content, mBuyFragment);
                 break;
-            case R.id.nav_system:
-                toolbar.setLogo(R.drawable.ic_menu_paper_plane);
+            case R.id.nav_notice:
+                toolbar.setLogo(R.drawable.ic_menu_paper_plane2);
                 toolbar.setTitle("  公告");
-                ToastUtil.show(this,"system");
+                if (mNoticeFragment == null) {
+                    mNoticeFragment = new NoticeFragment();
+                }
+                // 使用当前Fragment的布局替代content的控件
+                transaction.replace(R.id.content, mNoticeFragment);
                 break;
             case R.id.nav_share:
                 ToastUtil.show(this,"share");
@@ -136,6 +203,8 @@ public class MainActivity extends MVPBaseActivity<MainContract.View, MainPresent
                 ToastUtil.show(this,"send");
                 return true;
         }
+        // 事务提交
+        transaction.commit();
 
         drawer.closeDrawer(GravityCompat.START);
         return true;
